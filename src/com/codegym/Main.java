@@ -1,5 +1,9 @@
 package com.codegym;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -68,6 +72,35 @@ public class Main {
         } else {
             System.out.println(name + " không tìm thấy trong danh sách học sinh");
         }
+    }
+    public static List<Classmate> inputManyClassmate() {
+        List<Classmate> listClassmate = new ArrayList<>();
+        System.out.println("Nhập số lượng thông tin bạn cùng lớp cần nhập: ");
+        int size = scanner.nextInt();
+        for (int index = 0; index < size; index++) {
+            System.out.println("Nhập thông tin bạn thứ " + (index + 1) + ": ");
+            System.out.println("Nhập tên của bạn: ");
+            String name = scanner.nextLine();
+            scanner.nextLine();
+            System.out.println("Nhập ngày sinh: ");
+            String birthday = scanner.nextLine();
+            System.out.println("Nhập địa chỉ email: ");
+            String email = scanner.nextLine();
+            Classmate classmate = new Classmate(name, birthday, email);
+            listClassmate.add(classmate);
+            System.out.println(classmate);
+            try {
+                FileWriter fileWriter = new FileWriter("classmate.txt");
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.write(listClassmate.get(index).toString() + "\n");
+                fileWriter.write(String.valueOf(classmate));
+                fileWriter.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            System.out.println("Ghi file thành công");
+        }
+        return listClassmate;
     }
 }
 
